@@ -1,0 +1,19 @@
+data/
+├── AID/
+│   ├── train/
+│   │   ├── class1/
+│   │   ├── class2/
+│   │   └── ...
+│   └── val/
+│       ├── class1/
+│       ├── class2/
+│       └── ...
+└── NWPU-RESISC45/
+    ├── train/
+    │   ├── class1/
+    │   ├── class2/
+    │   └── ...
+    └── val/
+        ├── class1/
+        ├── class2/
+        └── ...

@@ -1,0 +1,19 @@
+LSViT-Remote-Sensing/
+│
+├── README.md
+├── requirements.txt
+├── data/
+│   ├── AID/
+│   └── NWPU-RESISC45/
+├── models/
+│   ├── __init__.py
+│   ├── lsvit.py
+│   └── vit.py
+├── utils/
+│   ├── __init__.py
+│   ├── data_loader.py
+│   ├── metrics.py
+│   └── transforms.py
+├── train.py
+├── evaluate.py
+└── config.py

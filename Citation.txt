@@ -1,0 +1,54 @@
+
+If you use this code in your research, please cite the original paper:
+@article{zou2024local,
+  title={Local overlapping attentional selection with VIT for Image classification in remote sensing},
+  author={Zou, ChangMan and Jeon, Wang-Su and Rhee, Sang-Yong},
+  journal={arXiv preprint arXiv:xxxx.xxxxx},
+  year={2024}
+}
+
+
+### 2. `requirements.txt`
+
+
+torch==1.10.0
+torchvision==0.11.1
+numpy==1.21.2
+tqdm==4.62.3
+
+
+### 3. `models/lsvit.py`
+
+```python
+import torch
+import torch.nn as nn
+from .vit import ViT
+
+class LocalSelectionModule(nn.Module):
+    def __init__(self, num_tokens, num_selected_tokens):
+        super(LocalSelectionModule, self).__init__()
+        self.num_tokens = num_tokens
+        self.num_selected_tokens = num_selected_tokens
+
+    def forward(self, x, attention_weights):
+        # Select the top-k tokens based on attention weights
+        _, indices = torch.topk(attention_weights, self.num_selected_tokens, dim=1)
+        selected_tokens = torch.gather(x, 1, indices.unsqueeze(-1).expand(-1, -1, x.size(-1)))
+        return selected_tokens
+
+class LSViT(nn.Module):
+    def __init__(self, vit_model, num_selected_tokens):
+        super(LSViT, self).__init__()
+        self.vit = vit_model
+        self.local_selection = LocalSelectionModule(self.vit.num_tokens, num_selected_tokens)
+
+    def forward(self, x):
+        # Pass through ViT layers
+        x, attention_weights = self.vit(x)
+        
+        # Apply local selection module
+        selected_tokens = self.local_selection(x, attention_weights)
+        
+        # Combine with classification token
+        output = self.vit.classifier(selected_tokens)
+        return output
