@@ -1,4 +1,4 @@
-# LSViT for Remote Sensing Image Classification
+# Local Overlapping Attentional Selection with VIT for Image Classification in Remote Sensing
 
 This repository contains the implementation of the LSViT model for remote sensing image classification, as described in the paper "Local overlapping attentional selection with VIT for Image classification in remote sensing".
 
